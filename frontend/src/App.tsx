@@ -42,6 +42,15 @@ const projects: Project[] = [
     accent: "#F43F5E",
   },
   {
+    title: "Wiki-Guesser",
+    subtitle: "Personal Project · 2026",
+    desc: "Multiplayer Wikipedia guessing game — a mystery image or blanked-out article opening appears and players race to name the topic. Node + Express + Socket.IO with SQLite, featuring Elo-rated matchmaking across two ladders, private rooms for up to 8 friends, three daily solo puzzles, and Google/Discord OAuth. Answers and scoring stay server-side so the round can't be peeked at in the browser. Deployed to AWS with Terraform: EC2 behind Caddy for TLS, secrets in SSM, snapshots via DLM, and CloudWatch alarms — all covered by a ~30-file Node test suite.",
+    tech: ["Node.js", "Socket.IO", "Express", "SQLite", "Terraform", "AWS"],
+    icon: "🧠",
+    accent: "#22D3EE",
+    repo: "https://github.com/kyle678-labs/wiki-guesser",
+  },
+  {
     title: "Secure Vault",
     subtitle: "Feb 2026 – May 2026",
     desc: "Zero-knowledge encrypted cloud storage and password manager. A cross-platform desktop app that encrypts files and filenames client-side with AES-256-GCM before upload — the server only ever stores ciphertext. Envelope encryption with PBKDF2-wrapped data keys enables atomic password rotation and Shamir's Secret Sharing recovery, plus resumable chunked sync with a crash-safe state ledger.",
@@ -117,8 +126,8 @@ const projects: Project[] = [
 
 const skills = [
   { label: "Languages", items: ["Python", "Java", "C", "C++", "C#", "Rust", "JavaScript", "TypeScript", "SQL", "Bash", "VHDL"] },
-  { label: "Frameworks & Tools", items: ["React", "Flask", "Electron", "Node.js", "Vite", "REST APIs", "pytest", "Git"] },
-  { label: "Cloud & DevOps", items: ["AWS (S3)", "Azure", "GCP", "Kubernetes (MicroK8s)", "Terraform", "Linux", "GitHub Actions", "Keel", "Grafana", "Prometheus"] },
+  { label: "Frameworks & Tools", items: ["React", "Next.js", "Flask", "Electron", "Node.js", "Express", "Socket.IO", "Vite", "REST APIs", "pytest", "Git"] },
+  { label: "Cloud & DevOps", items: ["AWS (EC2, S3)", "Azure", "GCP", "Kubernetes (MicroK8s)", "Terraform", "Linux", "GitHub Actions", "Keel", "Grafana", "Prometheus", "CloudWatch"] },
   { label: "Networking & Security", items: ["Cloudflare Tunnel", "AdGuard Home", "Wireshark", "Nmap", "Applied Cryptography", "Terrascan"] },
   { label: "Databases", items: ["MySQL", "SQLite", "NoSQL"] },
 ];
