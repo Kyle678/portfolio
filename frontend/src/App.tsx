@@ -55,12 +55,93 @@ const THEMES: Record<string, { name: string; c: Palette }> = {
 
 const THEME_ORDER = ["paper", "carbon", "midnight"];
 
+// 24x24 stroke icons, drawn in the card's edge color so they follow the theme.
+const icons = {
+  shield: <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />,
+  globe: (
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+      <path d="M2 12h20" />
+    </>
+  ),
+  lock: (
+    <>
+      <rect x="3" y="11" width="18" height="11" rx="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </>
+  ),
+  gamepad: (
+    <>
+      <path d="M6 12h4" />
+      <path d="M8 10v4" />
+      <path d="M15 13h.01" />
+      <path d="M18 11h.01" />
+      <path d="M17.32 5H6.68a4 4 0 0 0-3.98 3.59c-.08.67-.7 5.71-.7 7.41a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.41-1.41A2 2 0 0 1 9.83 16h4.34a2 2 0 0 1 1.41.59L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.7-.62-6.74-.7-7.41A4 4 0 0 0 17.32 5z" />
+    </>
+  ),
+  bulb: (
+    <>
+      <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.8.8 1.3 1.5 1.5 2.5" />
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+    </>
+  ),
+  note: (
+    <>
+      <path d="M15.5 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h9.5L21 14.5V5a2 2 0 0 0-2-2z" />
+      <path d="M14 21v-6a1 1 0 0 1 1-1h6" />
+    </>
+  ),
+  mouse: (
+    <>
+      <rect x="5" y="2" width="14" height="20" rx="7" />
+      <path d="M12 6v4" />
+    </>
+  ),
+  server: (
+    <>
+      <rect x="2" y="2" width="20" height="8" rx="2" />
+      <rect x="2" y="14" width="20" height="8" rx="2" />
+      <path d="M6 6h.01" />
+      <path d="M6 18h.01" />
+    </>
+  ),
+  book: <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />,
+  key: (
+    <>
+      <path d="M2.59 17.41A2 2 0 0 0 2 18.83V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.17a2 2 0 0 0 1.41-.59l.82-.81a6.5 6.5 0 1 0-4-4z" />
+      <circle cx="16.5" cy="7.5" r=".5" />
+    </>
+  ),
+};
+
+type IconName = keyof typeof icons;
+
+function Icon({ name, color, size = 22 }: { name: IconName; color: string; size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {icons[name]}
+    </svg>
+  );
+}
+
 type Project = {
   title: string;
   subtitle: string;
   desc: string;
   tech: string[];
-  icon: string;
+  icon: IconName;
   accent: string;
   repo?: string;
   live?: string;
@@ -72,7 +153,7 @@ const projects: Project[] = [
     subtitle: "Senior Capstone · Aug 2025 – May 2026",
     desc: "AI-based anomaly detection for power-grid networks. Built a simulated grid network to generate realistic traffic and anomaly data, then trained an XGBoost model that caught 80% of anomalies — flagging faults and intrusions on critical infrastructure. Delivered with a 5-person multidisciplinary team.",
     tech: ["Python", "XGBoost", "Machine Learning", "Networking"],
-    icon: "🛡️",
+    icon: "shield",
     accent: "#F43F5E",
   },
   {
@@ -80,7 +161,7 @@ const projects: Project[] = [
     subtitle: "Personal Project · 2026",
     desc: "Multiplayer Wikipedia guessing game — a mystery image or blanked-out article opening appears and players race to name the topic. Node + Express + Socket.IO with SQLite, featuring Elo-rated matchmaking across two ladders, private rooms for up to 8 friends, three daily solo puzzles, and Google/Discord OAuth. Answers and scoring stay server-side so the round can't be peeked at in the browser. Deployed to AWS with Terraform: EC2 behind Caddy for TLS, secrets in SSM, snapshots via DLM, and CloudWatch alarms — all covered by a ~30-file Node test suite.",
     tech: ["Node.js", "Socket.IO", "Express", "SQLite", "Terraform", "AWS"],
-    icon: "🧠",
+    icon: "globe",
     accent: "#22D3EE",
     repo: "https://github.com/kyle678-labs/wiki-guesser",
     live: "https://wiki-guesser.com",
@@ -90,7 +171,7 @@ const projects: Project[] = [
     subtitle: "Feb 2026 – May 2026",
     desc: "Zero-knowledge encrypted cloud storage and password manager. A cross-platform desktop app that encrypts files and filenames client-side with AES-256-GCM before upload — the server only ever stores ciphertext. Envelope encryption with PBKDF2-wrapped data keys enables atomic password rotation and Shamir's Secret Sharing recovery, plus resumable chunked sync with a crash-safe state ledger.",
     tech: ["Electron", "React", "Flask", "AWS S3", "AES-256-GCM"],
-    icon: "🔐",
+    icon: "lock",
     accent: "#7C3AED",
     repo: "https://github.com/kyle678/SecureFileVault",
   },
@@ -99,7 +180,7 @@ const projects: Project[] = [
     subtitle: "Live at gamersunite.us · 2026",
     desc: "Matchmaking for games that don't have it. Players form parties with game, mode, region, and skill parameters; the moment a party fills, a Discord bot spins up a private voice channel locked to its members and DMs everyone the link. Discord-only auth, mutual blocking and reporting for community safety, and a background sweeper that reaps expired parties and channels.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Discord API"],
-    icon: "🎮",
+    icon: "gamepad",
     accent: "#F59E0B",
     repo: "https://github.com/kyle678-labs/GamersUnite",
     live: "https://gamersunite.us",
@@ -109,7 +190,7 @@ const projects: Project[] = [
     subtitle: "Personal Project",
     desc: "Real-time control system for 1,500-pixel WS2812B LED strips: a React web UI, Flask REST API, and Python render engine on Raspberry Pi communicating over UDP so HTTP latency can never stall the render loop. Includes a scene builder persisted to SQLite and a pytest suite that stubs the Pi hardware.",
     tech: ["React", "Flask", "Raspberry Pi", "UDP", "SQLite"],
-    icon: "💡",
+    icon: "bulb",
     accent: "#F59E0B",
     repo: "https://github.com/kyle678/LED-Flux",
   },
@@ -118,7 +199,7 @@ const projects: Project[] = [
     subtitle: "Personal Project · 2026",
     desc: "Windows sticky-notes app in C# (.NET 8, WPF) that lives in the system tray and summons notes with global hotkeys. Rich text and image paste, note groups with per-workspace show/hide, a Notes Manager with 7-day recovery for deleted notes, continuous autosave, and one-click auto-updates from GitHub Releases via an Inno Setup installer.",
     tech: ["C#", ".NET 8", "WPF", "Inno Setup"],
-    icon: "🗒️",
+    icon: "note",
     accent: "#7C3AED",
     repo: "https://github.com/kyle678/desktopStickyNotes",
   },
@@ -127,7 +208,7 @@ const projects: Project[] = [
     subtitle: "Personal Project · 2026",
     desc: "Software KVM switch for Windows, written in Rust: share one mouse and keyboard between two PCs over the LAN — no extra hardware, no cloud. Low-level input hooks capture events and stream them over TCP as relative deltas, UDP broadcast auto-discovers the other machine, and pushing the cursor past the screen edge hands control across. Includes bidirectional clipboard sync and a tray-icon UI in a single ~1 MB executable.",
     tech: ["Rust", "Windows API", "TCP/UDP", "Systems Programming"],
-    icon: "🖱️",
+    icon: "mouse",
     accent: "#F43F5E",
     repo: "https://github.com/kyle678/openMouseKeyboard",
   },
@@ -136,7 +217,7 @@ const projects: Project[] = [
     subtitle: "Dec 2023 – Present",
     desc: "Self-managed MicroK8s (Kubernetes) cluster on Linux hosting a media server, NAS, photo management, and public websites — including this one. GitHub Actions + Keel CI/CD roll out updates on every push; Cloudflare Tunnel provides public DNS, proxying, and TLS with no open inbound ports; Grafana and Prometheus monitor cluster health.",
     tech: ["Kubernetes", "GitHub Actions", "Cloudflare Tunnel", "Grafana", "Prometheus"],
-    icon: "☸️",
+    icon: "server",
     accent: "#22D3EE",
   },
   {
@@ -144,7 +225,7 @@ const projects: Project[] = [
     subtitle: "Personal Project · 2026",
     desc: "Password-protected journal app with a React frontend, Flask backend, and SQLite storage. Markdown entries autosave as you type and are searchable by title and content. Auth uses a scrypt-hashed password, HttpOnly session cookies, and a per-IP lockout after repeated failed attempts.",
     tech: ["React", "Flask", "SQLite", "scrypt"],
-    icon: "📓",
+    icon: "book",
     accent: "#22D3EE",
     repo: "https://github.com/kyle678-labs/personal-journal",
   },
@@ -153,7 +234,7 @@ const projects: Project[] = [
     subtitle: "Personal Project",
     desc: "Advanced Encryption Standard implementation in C, built to the NIST FIPS 197 specification. Supports 128, 192, and 256-bit keys and can encrypt and decrypt any file type.",
     tech: ["C", "Cryptography", "NIST FIPS 197"],
-    icon: "🔏",
+    icon: "key",
     accent: "#7C3AED",
     repo: "https://github.com/kyle678/AES",
   },
@@ -416,7 +497,7 @@ export default function App() {
                     <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: 700, color: edge, letterSpacing: "1px" }}>
                       P-{String(i + 1).padStart(2, "0")}
                     </span>
-                    <span style={{ fontSize: "1.5rem", lineHeight: 1 }}>{p.icon}</span>
+                    <Icon name={p.icon} color={edge} size={20} />
                   </div>
                   <h3 style={{ margin: "0 0 4px", fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.35rem", fontWeight: 700, letterSpacing: "-0.5px" }}>{p.title}</h3>
                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: C.faint, marginBottom: "12px" }}>{p.subtitle}</div>
