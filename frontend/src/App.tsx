@@ -83,6 +83,7 @@ const projects: Project[] = [
     icon: "🧠",
     accent: "#22D3EE",
     repo: "https://github.com/kyle678-labs/wiki-guesser",
+    live: "https://wiki-guesser.com",
   },
   {
     title: "Secure Vault",
